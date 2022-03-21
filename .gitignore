@@ -1,4 +1,4 @@
 data/*
 
 # Don't ignore these files
-!*/*.txt
+!*/*.md
