@@ -34,16 +34,16 @@ if __name__ == "__main__":
     # Visualize a sample image from train_ds
     plt.figure(figsize=(10,5))
     for img,mask in train_ds:
-        img = torch.squeeze(img).type(torch.uint8) # change size [1,128,192] to [128,192] and to the correct type
-        mask = torch.squeeze(mask).type(torch.uint8) # uint8 is unsigned integer; only positive integers allowed in this type
+        img = torch.squeeze(img) # change size [1,128,192] to [128,192] and to the correct type
+        mask = torch.squeeze(mask) # uint8 is unsigned integer; only positive integers allowed in this type
         show_img_mask(img, mask)
         plt.title("Sample image from train_ds")
         plt.show()
         break
 
     for img,mask in val_ds:
-        img = torch.squeeze(img).type(torch.uint8) # change size [1,128,192] to [128,192] and to the correct type
-        mask = torch.squeeze(mask).type(torch.uint8) # uint8 is unsigned integer; only positive integers allowed in this type
+        img = torch.squeeze(img) # change size [1,128,192] to [128,192] and to the correct type
+        mask = torch.squeeze(mask) # uint8 is unsigned integer; only positive integers allowed in this type
         show_img_mask(img, mask)
         plt.title("Sample image from val_ds")
         plt.show()

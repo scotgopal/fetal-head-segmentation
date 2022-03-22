@@ -34,8 +34,8 @@ class fetal_dataset(Dataset):
             image = augmented["image"]
             mask = augmented["mask"]
         
-        image = to_tensor(image)*255
-        mask = to_tensor(mask)*255
+        image = (to_tensor(image)*255).type(torch.uint8)
+        mask = (to_tensor(mask)*255).type(torch.uint8)
 
         return(image, mask)
 
@@ -54,8 +54,8 @@ if __name__ == "__main__":
     print(img.shape, img.type(), torch.max(img))
     print(mask.shape, mask.type(), torch.max(mask))
      
-    img = torch.squeeze(img).type(torch.uint8) # change size [1,128,192] to [128,192] and to the correct type
-    mask = torch.squeeze(mask).type(torch.uint8) # uint8 is unsigned integer; only positive integers allowed in this type
+    img = torch.squeeze(img) # change size [1,128,192] to [128,192] and to the correct type
+    mask = torch.squeeze(mask) # uint8 is unsigned integer; only positive integers allowed in this type
     show_img_mask(img, mask)
     plt.show()
 
