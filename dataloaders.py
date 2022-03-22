@@ -1,9 +1,11 @@
 from torch.utils.data import Dataset, DataLoader
 
-def get_dl(ds:Dataset, batch_size, shuffle=False):
+
+def get_dl(ds: Dataset, batch_size, shuffle=False):
     return DataLoader(ds, batch_size=batch_size, shuffle=shuffle)
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     from torch.utils.data import Subset
 
     from pathlib import Path
@@ -18,8 +20,8 @@ if __name__=="__main__":
     fetal_val = fetal_dataset(data_dir, transform_val)
 
     train_indices, val_indices = split_train_test(fetal_train)
-    
-    train_ds=Subset(fetal_train, train_indices)
+
+    train_ds = Subset(fetal_train, train_indices)
     print(len(train_ds))
 
     val_ds = Subset(fetal_val, val_indices)
@@ -31,7 +33,7 @@ if __name__=="__main__":
         print(img.shape, img.dtype)
         print(mask.shape, mask.dtype)
         break
-    
+
     val_dl = get_dl(val_ds, 16, False)
 
     for img, mask in val_dl:

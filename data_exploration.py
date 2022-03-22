@@ -13,8 +13,10 @@ if __name__ == "__main__":
     anntsList = []
     for pp in list(path2train.glob("*")):
         if ".png" in str(pp):
-            if "Annotation" in str(pp): anntsList.append(pp)
-            else: imgsList.append(pp)
+            if "Annotation" in str(pp):
+                anntsList.append(pp)
+            else:
+                imgsList.append(pp)
         else:
             print(pp)
 
@@ -22,7 +24,7 @@ if __name__ == "__main__":
     print(f"total annotations: {len(anntsList)}")
 
     np.random.seed(0)
-    random_image_paths = np.random.choice(imgsList,4)
+    random_image_paths = np.random.choice(imgsList, 4)
     random_image_paths
 
     for image_path in random_image_paths:
@@ -31,23 +33,17 @@ if __name__ == "__main__":
         annt_edges = Image.open(annt_path)
         mask = ndimage.binary_fill_holes(annt_edges)
 
-        plt.figure(figsize=(10,5))
-        plt.subplot(1,3,1)
+        plt.figure(figsize=(10, 5))
+        plt.subplot(1, 3, 1)
         plt.title(image_path.stem)
-        plt.imshow(
-            img, 
-            cmap="gray"
-            )
+        plt.imshow(img, cmap="gray")
 
-        plt.subplot(1,3,2)
-        plt.title(str(image_path.stem)+"_mask")
-        plt.imshow(
-            mask, 
-            cmap="gray"
-            )
+        plt.subplot(1, 3, 2)
+        plt.title(str(image_path.stem) + "_mask")
+        plt.imshow(mask, cmap="gray")
 
-        plt.subplot(1,3,3)
+        plt.subplot(1, 3, 3)
         plt.title(image_path.stem)
-        show_img_mask(img,mask)
+        show_img_mask(img, mask)
 
     plt.show()
