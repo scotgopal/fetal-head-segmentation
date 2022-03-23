@@ -1,0 +1,11 @@
+conda create -n conda-pytorch39 python=3.9
+conda activate conda-pytorch39
+
+conda install -c anaconda pandas matplotlib
+conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch
+conda install -c conda-forge albumentations
+conda install -c conda-forge jupyterlab 
+pip install torchsummary
+conda install -c anaconda scikit-learn
+pip install tensorboard
+conda install -c conda-forge black
