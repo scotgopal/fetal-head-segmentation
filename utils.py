@@ -15,11 +15,11 @@ def get_optim(model):
     return optim.Adam(model.parameters(), lr=3e-4)
 
 
-def get_lr_scheduler(optimizer):
+def get_lr_scheduler(optimizer: optim.Optimizer):
     """Return ReduceLROnPlateau scheduler"""
     return ReduceLROnPlateau(optimizer, mode="min", factor=0.5, patience=20, verbose=1)
 
 
-def get_lr(optimizer):
+def get_lr(optimizer: optim.Optimizer):
     for param_group in optimizer.param_groups:
         return param_group["lr"]

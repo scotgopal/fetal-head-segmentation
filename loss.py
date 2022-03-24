@@ -12,20 +12,20 @@ def dice_loss(pred, target, smooth=1e-5):
     return loss.sum(), dice.sum()
 
 
+def metrics_batch(pred, target):
+    """Return dice.sum() as the validation metric since this is a segmentation task"""
+    pred = torch.sigmoid(pred)
+    _, dice_sum = dice_loss(pred, target)
+    return dice_sum
+
+
 def loss_func(pred, target):
     """Calculate the combined loss (dice and BCE)"""
     bce_loss_value = F.binary_cross_entropy_with_logits(pred, target, reduction="sum")
-    pred = F.sigmoid(pred)
+    pred = torch.sigmoid(pred)
     dice_loss_value, _ = dice_loss(pred, target)
     combined_loss = bce_loss_value + dice_loss_value
     return combined_loss
-
-
-def metrics_batch(pred, target):
-    """Return dice.sum() as the validation metric since this is a segmentation task"""
-    pred = F.sigmoid(pred)
-    _, dice_sum = dice_loss(pred, target)
-    return dice_sum
 
 
 def loss_batch(loss_func, output, target, opt=None):
@@ -43,8 +43,8 @@ def loss_epoch(
     model,
     loss_func,
     dataset_dl: DataLoader,
-    sanity_check=False,
-    opt=None,
+    sanity_check: bool = False,
+    opt: torch.optim.Optimizer = None,
     device=torch.device("cpu"),
 ):
     running_loss = 0.0
