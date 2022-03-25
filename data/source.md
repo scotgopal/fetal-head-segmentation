@@ -15,3 +15,6 @@ https://hc18.grand-challenge.org/
 ## Data Source Link:
 
 https://zenodo.org/record/1322001#.Yjghv-pBy3B
+
+1. Download `training_set.zip` and `test_set.zip`.
+2. Extract the contents to `./data/training_set` and `./data/test_set`
