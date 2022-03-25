@@ -1,6 +1,6 @@
 import torch
 from torch.utils.data import Dataset
-from torchvision.transforms.functional import to_tensor, to_pil_image
+from torchvision.transforms.functional import to_tensor
 from PIL import Image
 from scipy import ndimage as ndi
 import numpy as np

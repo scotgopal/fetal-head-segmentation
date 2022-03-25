@@ -95,6 +95,7 @@ if __name__ == "__main__":
 
     ## move model to GPU if available
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    # UNCOMMENT THE FOLLOWING TO ENFORCE CPU-USE ONLY
     # device = torch.device("cpu")
     model = model.to(device)
     summary(model, input_size=params_model["input_shape"], device=device.type)
@@ -107,22 +108,22 @@ if __name__ == "__main__":
     path2models = "./models/"
     if not os.path.exists(path2models):
         os.mkdir(path2models)
+    num_epochs = 100
     params_train = {
-        "num_epochs": 15,
+        "num_epochs": num_epochs,
         "optimizer": opt,
         "loss_func": loss_func,
         "train_dl": train_dl,
         "val_dl": val_dl,
         "sanity_check": False,
         "lr_scheduler": lr_scheduler,
-        "path2weights": path2models + "weights.pt",
+        "path2weights": path2models + f"{num_epochs}epochs_weights.pt",
         "device": device,
     }
     # torch.cuda.empty_cache()
     model, loss_hist, metric_hist = train_val(model, params_train)
 
     # Plot historical values of stored during training
-    num_epochs = params_train["num_epochs"]
     plt.title("Train-Val Loss")
     plt.plot(range(1, num_epochs + 1), loss_hist["train"], label="train")
     plt.plot(range(1, num_epochs + 1), loss_hist["val"], label="val")

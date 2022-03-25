@@ -67,6 +67,8 @@ if __name__ == "__main__":
 
     # move model to GPU if available
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    # UNCOMMENT THE FOLLOWING TO ENFORCE CPU-USE ONLY
+    # device = torch.device("cpu")
     model = model.to(device)
 
     print(model)

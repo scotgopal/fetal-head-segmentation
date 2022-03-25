@@ -28,10 +28,10 @@ def loss_func(pred, target):
     return combined_loss
 
 
-def loss_batch(loss_func, output, target, opt=None):
+def loss_batch(loss_func, preds_batch, targets_batch, opt=None):
     """Return the total loss and validation metric of the most recent batch of data"""
-    loss = loss_func(output, target)
-    metric_b = metrics_batch(output, target)
+    loss = loss_func(preds_batch, targets_batch)
+    metric_b = metrics_batch(preds_batch, targets_batch)
     if opt is not None:
         opt.zero_grad(set_to_none=True)
         loss.backward()
@@ -51,11 +51,11 @@ def loss_epoch(
     running_metric = 0.0
     len_data = len(dataset_dl.dataset)
 
-    for xb, yb in dataset_dl:
-        xb = xb.type(torch.float32).to(device)
-        yb = yb.type(torch.float32).to(device)
-        output = model(xb)
-        loss_b, metric_b = loss_batch(loss_func, output, yb, opt)
+    for images_batch, targets_batch in dataset_dl:
+        images_batch = images_batch.type(torch.float32).to(device)
+        targets_batch = targets_batch.type(torch.float32).to(device)
+        preds_batch = model(images_batch)
+        loss_b, metric_b = loss_batch(loss_func, preds_batch, targets_batch, opt=opt)
         running_loss += loss_b
 
         if metric_b is not None:
