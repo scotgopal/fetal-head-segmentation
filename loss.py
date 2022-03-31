@@ -35,7 +35,7 @@ def loss_batch(loss_func, preds_batch, targets_batch, opt=None):
         opt.zero_grad(set_to_none=True)
         loss.backward()
         opt.step()
-    return loss.item(), metric_b.item()
+    return loss, metric_b
 
 
 def loss_epoch(
@@ -61,6 +61,6 @@ def loss_epoch(
             running_metric += metric_b
         if sanity_check is True:
             break
-    loss = running_loss / float(len_data)
-    metric = running_metric / float(len_data)
+    loss = running_loss.item() / float(len_data)
+    metric = running_metric.item() / float(len_data)
     return loss, metric
