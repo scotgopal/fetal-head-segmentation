@@ -52,6 +52,12 @@ class SegNet(nn.Module):
         x = F.relu(self.conv_up4(x))
 
         x = self.conv_out(x)
+
+        # NOTE: Observe that we are not using Sigmoid activation in the output mainly because
+        # the loss is partly calculate with BCEWITHLOGITSLOSS. This loss function already
+        # includes a sigmoid within it. So we avoid using sigmoid here, but we have to
+        # manually apply sigmoid function to our prediction when calculating the second part of our loss,
+        # which is the dice loss.
         return x
 
 
