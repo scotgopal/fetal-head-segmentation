@@ -5,6 +5,7 @@ from torch.utils.data import DataLoader
 
 def dice_loss(pred, target, smooth=1e-5):
     """Function to calculate the dice loss per data batch"""
+    pred = torch.sigmoid(pred)
     intersection = (pred * target).sum(dim=(2, 3))
     union = pred.sum(dim=(2, 3)) + target.sum(dim=(2, 3))
     dice = 2.0 * (intersection + smooth) / (union + smooth)
@@ -14,7 +15,6 @@ def dice_loss(pred, target, smooth=1e-5):
 
 def metrics_batch(pred, target):
     """Return dice.sum() as the validation metric since this is a segmentation task"""
-    pred = torch.sigmoid(pred)
     _, dice_sum = dice_loss(pred, target)
     return dice_sum
 
@@ -22,7 +22,6 @@ def metrics_batch(pred, target):
 def loss_func(pred, target):
     """Calculate the combined loss (dice and BCE)"""
     bce_loss_value = F.binary_cross_entropy_with_logits(pred, target, reduction="sum")
-    pred = torch.sigmoid(pred)
     dice_loss_value, _ = dice_loss(pred, target)
     combined_loss = bce_loss_value + dice_loss_value
     return combined_loss
